@@ -1,0 +1,18 @@
+{% extends 'film/base.html' %}
+ 
+{% block content %}
+<h1>{{title}}</h1>
+ 
+<form method="post">
+    {% csrf_token %}
+<!-- CSRF токен представляет собой меру безопасности, которая предотвращает атаки подделки межсайтовых запросов. инструкция генерирует и вставляет уникальный CSRF токен в форму. При отправке формы, сервер проверяет, что значение CSRF токена соответствует ожидаемому значению, чтобы убедиться, что запрос пришел от доверенного источника.-->
+
+{% for f in form %}
+<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+<div class="form-error">{{ f.errors }}</div>
+{% endfor %}
+
+    <button type="submit">Регистрация</button>
+</form>
+ 
+{% endblock %}

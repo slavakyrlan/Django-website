@@ -1,0 +1,33 @@
+{% extends 'film/base.html' %}
+
+{% block content %}
+<ul class="list-articles">
+	{% for p in object_list %}
+			<li><div class="article-panel">
+	<p class="first">Категория: {{p.cat}}</p>
+	<p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
+</div>
+
+{% if p.photo %}
+	<p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+{% endif %}
+
+
+				<h2>{{p.title}}</h2>
+	{% autoescape on %}
+	{{p.content|linebreaks|truncatewords:50}}
+	{% endautoescape %}
+			<div class="clear"></div>
+			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+			</li>
+	{% endfor %}
+</ul>
+{% endblock %}
+
+<!--
+Проверяет, есть ли у статьи (p) фотография (p.photo).
+17-19 Эта строка применяет автоматическое экранирование HTML (autoescape) для содержимого статьи (p.content). Фильтры linebreaks преобразует переносы строк в HTML-теги <br>, а truncatewords:50 обрезает содержимое до 50 слов.
+20 Пустой <div> с классом CSS clear, который используется для очистки потока элементов.
+
+-->
+
